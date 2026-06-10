@@ -29,6 +29,12 @@
     },
     {
       "path": "./projects/shell-host/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/auth-mfe/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/auth-mfe/tsconfig.spec.json"
     }
   ]
 }
