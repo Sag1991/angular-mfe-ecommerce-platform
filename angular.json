@@ -134,11 +134,59 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
+					"builder": "@angular-architects/native-federation:build",
+					"options": {},
+					"configurations": {
+						"production": {
+							"target": "auth-mfe:esbuild:production"
+						},
+						"development": {
+							"target": "auth-mfe:esbuild:development",
+							"dev": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "@angular-architects/native-federation:build",
+					"options": {
+						"target": "auth-mfe:serve-original:development",
+						"rebuildDelay": 500,
+						"dev": true,
+						"cacheExternalArtifacts": false,
+						"port": 0
+					}
+				},
+				"extract-i18n": {
+					"builder": "@angular/build:extract-i18n"
+				},
+				"test": {
+					"builder": "@angular/build:karma",
+					"options": {
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						],
+						"tsConfig": "projects/auth-mfe/tsconfig.spec.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							{
+								"glob": "**/*",
+								"input": "projects/auth-mfe/public"
+							}
+						],
+						"styles": [
+							"projects/auth-mfe/src/styles.scss"
+						]
+					}
+				},
+				"esbuild": {
 					"builder": "@angular/build:application",
 					"options": {
 						"browser": "projects/auth-mfe/src/main.ts",
 						"polyfills": [
-							"zone.js"
+							"zone.js",
+							"es-module-shims"
 						],
 						"tsConfig": "projects/auth-mfe/tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
@@ -176,39 +224,19 @@
 					},
 					"defaultConfiguration": "production"
 				},
-				"serve": {
+				"serve-original": {
 					"builder": "@angular/build:dev-server",
 					"configurations": {
 						"production": {
-							"buildTarget": "auth-mfe:build:production"
+							"buildTarget": "auth-mfe:esbuild:production"
 						},
 						"development": {
-							"buildTarget": "auth-mfe:build:development"
+							"buildTarget": "auth-mfe:esbuild:development"
 						}
 					},
-					"defaultConfiguration": "development"
-				},
-				"extract-i18n": {
-					"builder": "@angular/build:extract-i18n"
-				},
-				"test": {
-					"builder": "@angular/build:karma",
+					"defaultConfiguration": "development",
 					"options": {
-						"polyfills": [
-							"zone.js",
-							"zone.js/testing"
-						],
-						"tsConfig": "projects/auth-mfe/tsconfig.spec.json",
-						"inlineStyleLanguage": "scss",
-						"assets": [
-							{
-								"glob": "**/*",
-								"input": "projects/auth-mfe/public"
-							}
-						],
-						"styles": [
-							"projects/auth-mfe/src/styles.scss"
-						]
+						"port": 4200
 					}
 				}
 			}
