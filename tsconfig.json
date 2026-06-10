@@ -41,6 +41,12 @@
     },
     {
       "path": "./projects/admin-mfe/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/shop-mfe/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/shop-mfe/tsconfig.spec.json"
     }
   ]
 }
